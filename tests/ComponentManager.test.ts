@@ -1,0 +1,1 @@
+// TODO: add option to component for optional uniqueness on entity

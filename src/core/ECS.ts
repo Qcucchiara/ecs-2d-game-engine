@@ -1,44 +1,30 @@
-import AbstractEntityManager from "./abstract/EntityManager.ts";
-import AbstractSystem from "./abstract/System.ts";
+import EntityManager from "./managers/EntityManager.ts";
+import ComponentManager from "./managers/ComponentManager.ts";
+import {ISystem} from "../types/ISystem.ts";
 
-/**
- * ECS (Entity-Component-System) class that manages the entity manager and systems.
- * This is a singleton class that provides a global access point to the ECS instance.
- */
 class ECS {
-    private static instance: ECS | null = null
-    public entityManager: AbstractEntityManager | null = null
-    private systems: Set<AbstractSystem>
+    private static instance: ECS | null
+    public entityManager: EntityManager
+    public componentManager: ComponentManager
+    private systems: Set<ISystem>
 
     private constructor() {
-        this.systems = new Set<AbstractSystem>()
+        this.entityManager = new EntityManager()
+        this.componentManager = ComponentManager.getInstance()
+        this.systems = new Set<ISystem>()
     }
 
     public static getInstance(): ECS {
-        if (!ECS.instance) {
-            ECS.instance = new ECS()
+        if (!this.instance) {
+            this.instance = new ECS()
         }
-        return ECS.instance
+        return this.instance
     }
 
-    public setEntityManager(entityManager: AbstractEntityManager): void {
-        this.entityManager = entityManager
+    public addSystem(system: ISystem): void {
+        this.systems.add(system)
+        // TODO: handle error
     }
-
-    public addSystem(system: AbstractSystem): void {
-        if (this.systems) {
-            this.systems.add(system)
-        }
-    }
-
-    public getEntityManager(): AbstractEntityManager {
-        if (!this.entityManager) {
-            throw new Error("Entity manager is not set.")
-        }
-        return this.entityManager
-    }
-
-
 }
 
 export default ECS

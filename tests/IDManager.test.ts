@@ -1,4 +1,4 @@
-import IDManager from "../src/core/IDManager";
+import IDManager from "../src/core/managers/IDManager";
 
 describe("IDManager", () => {
     let idManager: IDManager;

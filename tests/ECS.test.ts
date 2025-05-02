@@ -1,6 +1,17 @@
-describe("ECS", () => {
- test("new ECS instance should have EntityManager instance", () => {
-        const ECS = new  ECS.getInstance()
-        expect(entityManager).toBeInstanceOf(EntityManager)
- })
-})
+import ECS from "../src/core/ECS";
+
+describe('ECS', () => {
+    let ecs: ECS;
+
+    beforeEach(() => {
+        ecs = ECS.getInstance();
+    });
+
+    test('should be a singleton', () => {
+        const anotherEcs = ECS.getInstance();
+        expect(ecs).toBe(anotherEcs);
+    });
+
+    test('should add systems', () => {
+    });
+});
